@@ -13,6 +13,7 @@ func AvalonRouters(router *gin.RouterGroup) {
 
 	router.GET("/ping", controller.PingController)
 	router.GET("/orders", middleware.RequestType(), order.GetAllOrderController)
+	router.GET("/orders/search/:search", middleware.RequestType(), order.SearchOrderController)
 
 	router.POST("/orders", middleware.RequestType(), order.CreateOrderController)
 
