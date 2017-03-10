@@ -3,6 +3,7 @@ package routes
 import (
 	"avalon/controller"
 	"avalon/controller/order"
+	"avalon/middleware"
 
 	"gopkg.in/gin-gonic/gin.v1"
 )
@@ -11,7 +12,8 @@ import (
 func AvalonRouters(router *gin.RouterGroup) {
 
 	router.GET("/ping", controller.PingController)
-	router.HEAD("/ping", controller.PingController)
 
-	router.POST("/orders", order.CreateOrderController)
+	router.POST("/orders", middleware.RequestType(), order.CreateOrderController)
+
+	router.HEAD("/ping", controller.PingController)
 }
