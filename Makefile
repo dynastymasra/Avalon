@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := run
 
-REPOSITORY ?= coralteam/avalon
+REPOSITORY ?= dynastymasra/avalon
 VERSION ?= develop
 IMAGE = $(REPOSITORY):$(VERSION)
 
