@@ -19,7 +19,7 @@ type ArrayString []string
 // OrderStatus const value
 const (
 	OrderStatusCancel  OrderStatus = "CANCEL"
-	OrderStatusFinish  OrderStatus = "FINISH"
+	OrderStatusFinish  OrderStatus = "FINALIZE"
 	OrderStatusProcess OrderStatus = "PROCESS"
 	OrderStatusNew     OrderStatus = "NEW"
 )
@@ -32,7 +32,7 @@ type Order struct {
 	OrderStatus string      `json:"order_status" gorm:"not null;column:order_status;type:varchar(255)"`
 	Products    ArrayString `json:"products" binding:"required" gorm:"not null;column:products;type:varchar[]"`
 	CreatedAt   time.Time   `json:"created_at,omitempty"`
-	UpdatedAt   time.Time   `json:"-"`
+	UpdatedAt   time.Time   `json:"updated_at,omitempty"`
 	DeletedAt   *time.Time  `json:"-"`
 }
 

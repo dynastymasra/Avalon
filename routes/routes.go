@@ -16,5 +16,9 @@ func AvalonRouters(router *gin.RouterGroup) {
 
 	router.POST("/orders", middleware.RequestType(), order.CreateOrderController)
 
+	router.PUT("/orders/:id", middleware.RequestType(), order.UpdateOrderController)
+
+	router.DELETE("/orders/:id", middleware.RequestType(), order.DeleteOrderController)
+
 	router.HEAD("/ping", controller.PingController)
 }

@@ -11,4 +11,6 @@ var (
 	ErrNotSupportedHeader = errors.New("Required request Header is missing")
 	// ErrorRecordNotFound type
 	ErrorRecordNotFound = errors.New("Record or data your requested not found")
+	// ErrorNotValidUUID error
+	ErrorNotValidUUID = errors.New("Id order is invalid")
 )
