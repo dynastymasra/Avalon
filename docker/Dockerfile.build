@@ -1,0 +1,34 @@
+FROM golang:1.8.0-alpine
+
+# app workdir
+WORKDIR /go/src/avalon
+
+# copy app dependencies
+COPY glide.lock glide.yaml docker/*.sh ./
+
+# install dependecies
+RUN set -ex \
+    \
+    # install system dependencies
+    && apk add --update bash \
+	    git \
+	    glide \
+    \
+    # follow rediretion upon downloading glide dependencies
+    && git config --global http.https://gopkg.in.followRedirects true \
+    \
+    # install app dependencies
+    && glide install \
+    \
+    # clean glide cache
+    && rm -rf .glide/* \
+    \
+    # clean system dependencies
+    && apk del git glide \
+    && rm -rf /var/cache/apk/*
+
+# build app source code
+COPY . ./
+RUN go build -tags=main
+
+VOLUME /binary
