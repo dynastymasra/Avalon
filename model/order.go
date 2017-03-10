@@ -1,6 +1,8 @@
 package model
 
 import (
+	"bytes"
+	"database/sql/driver"
 	"fmt"
 	"strings"
 	"time"
@@ -8,6 +10,9 @@ import (
 
 // OrderStatus type
 type OrderStatus string
+
+// ArrayString type string
+type ArrayString []string
 
 // OrderStatus const value
 const (
@@ -19,19 +24,39 @@ const (
 
 // Order struct
 type Order struct {
-	ID          string     `json:"id" sql:"type:uuid" gorm:"not null;column:id;primary_key"`
-	ShopID      string     `json:"shop_id" binding:"required" gorm:"not null;column:shop_id;type:varchar(255)"`
-	CustomerID  string     `json:"customer_id" binding:"required" gorm:"not null;column:customer_id;type:varchar(255)"`
-	OrderStatus string     `json:"order_status" gorm:"not null;column:order_status;type:varchar(255)"`
-	Products    []string   `json:"products" binding:"required" gorm:"not null;column:products;type:varchar[]"`
-	CreatedAt   time.Time  `json:"created_at,omitempty"`
-	UpdatedAt   time.Time  `json:"-"`
-	DeletedAt   *time.Time `json:"-"`
+	ID          string      `json:"id" sql:"type:uuid" gorm:"not null;column:id;primary_key"`
+	ShopID      string      `json:"shop_id" binding:"required" gorm:"not null;column:shop_id;type:varchar(255)"`
+	CustomerID  string      `json:"customer_id" binding:"required" gorm:"not null;column:customer_id;type:varchar(255)"`
+	OrderStatus string      `json:"order_status" gorm:"not null;column:order_status;type:varchar(255)"`
+	Products    ArrayString `json:"products" binding:"required" gorm:"not null;column:products;type:varchar[]"`
+	CreatedAt   time.Time   `json:"created_at,omitempty"`
+	UpdatedAt   time.Time   `json:"-"`
+	DeletedAt   *time.Time  `json:"-"`
 }
 
 // TableName override interface
 func (Order) TableName() string {
 	return "avalon"
+}
+
+// Value interface
+func (a ArrayString) Value() (driver.Value, error) {
+	if len(a) == 0 {
+		return nil, nil
+	}
+
+	var buffer bytes.Buffer
+
+	buffer.WriteString("{")
+	for i, val := range a {
+		buffer.WriteString(val)
+		if i != len(a)-1 {
+			buffer.WriteString(",")
+		}
+	}
+	buffer.WriteString("}")
+
+	return buffer.String(), nil
 }
 
 // CheckOrderStatus if not id criteria
