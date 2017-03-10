@@ -1,0 +1,12 @@
+package: avalon
+license: MIT
+import: 
+- package: github.com/spf13/viper
+- package: gopkg.in/gin-gonic/gin.v1
+- package: github.com/Sirupsen/logrus
+  version: ^0.11.0
+- package: github.com/jinzhu/gorm
+  version: ^1.0
+  subpackages:
+  - dialects/postgres
+- package: github.com/satori/go.uuid
