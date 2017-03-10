@@ -6,6 +6,7 @@ import (
 	"runtime"
 
 	"avalon/model"
+	"avalon/routes"
 	"avalon/util"
 
 	log "github.com/Sirupsen/logrus"
@@ -50,6 +51,11 @@ func main() {
 	router.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, util.FailResponse(config.ErrorNotFound.Error()))
 	})
+
+	v1 := router.Group("/v1")
+	{
+		routes.AvalonRouters(v1)
+	}
 
 	router.Run(viper.GetString("ADDRESS"))
 }

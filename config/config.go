@@ -10,7 +10,7 @@ import (
 // SetDefault used to set default values for configuration
 func SetDefault() {
 	viper.SetDefault("ADDRESS", ":8080")
-	viper.SetDefault("GIN_MODE", "release")
+	viper.SetDefault("GIN_MODE", "debug")
 
 	// Set value of postgres
 	viper.SetDefault("POSTGRES_USERNAME", "postgres")
