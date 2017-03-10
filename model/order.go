@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 // OrderStatus type
@@ -57,6 +59,24 @@ func (a ArrayString) Value() (driver.Value, error) {
 	buffer.WriteString("}")
 
 	return buffer.String(), nil
+}
+
+// Scan interface
+func (a *ArrayString) Scan(value interface{}) error {
+	bytesValue, ok := value.([]byte)
+	if !ok {
+		log.WithFields(log.Fields{"file": "order.go", "package": "model"}).Error("Scan source not []byte")
+		return fmt.Errorf("Scan source not []byte")
+	}
+
+	stringValue := string(bytesValue)
+	stringValue = strings.Replace(stringValue, "{", "", -1)
+	stringValue = strings.Replace(stringValue, "}", "", -1)
+
+	stringArray := strings.Split(stringValue, ",")
+	(*a) = ArrayString(stringArray)
+
+	return nil
 }
 
 // CheckOrderStatus if not id criteria
