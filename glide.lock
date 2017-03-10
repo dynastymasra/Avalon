@@ -1,8 +1,17 @@
 hash: 153f72fbec162a25f35dce4273d6fb924510ead04190c5237cc17e5b9144a8f7
-updated: 2017-03-10T10:27:17.350001988+07:00
+updated: 2017-03-10T11:01:31.965559365+07:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197
+- name: github.com/gin-gonic/gin
+  version: e2212d40c62a98b388a5eb48ecbdcf88534688ba
+  subpackages:
+  - binding
+  - render
+- name: github.com/golang/protobuf
+  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
+  subpackages:
+  - proto
 - name: github.com/hashicorp/hcl
   version: eb6f65b2d77ed5078887f960ff570fbddbbeb49d
   subpackages:
@@ -18,8 +27,19 @@ imports:
   version: 5174cc5c242a728b435ea2be8a2f7f998e15429b
   subpackages:
   - dialects/postgres
+- name: github.com/jinzhu/inflection
+  version: 1c35d901db3da928c72a72d8458480cc9ade058f
+- name: github.com/lib/pq
+  version: 67c3f2a8884c9b1aac5503c8d42ae4f73a93511c
+  subpackages:
+  - hstore
+  - oid
 - name: github.com/magiconair/properties
   version: b3b15ef068fd0b17ddf408a23669f20811d194d2
+- name: github.com/manucorporat/sse
+  version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
+- name: github.com/mattn/go-isatty
+  version: 30a891c33c7cde7b02a981314b4228ec99380cca
 - name: github.com/mitchellh/mapstructure
   version: ed105d635dfa9ea7133f7c79f1eb36203fc3a156
 - name: github.com/pelletier/go-buffruneio
@@ -42,6 +62,10 @@ imports:
   version: 51268031d79952516489a9f8aa34e9709b98d946
 - name: github.com/spf13/viper
   version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
+- name: golang.org/x/net
+  version: f315505cf3349909cdf013ea56690da34e96a451
+  subpackages:
+  - context
 - name: golang.org/x/sys
   version: a646d33e2ee3172a661fc09bca23bb4889a41bc8
   subpackages:
@@ -53,6 +77,8 @@ imports:
   - unicode/norm
 - name: gopkg.in/gin-gonic/gin.v1
   version: e2212d40c62a98b388a5eb48ecbdcf88534688ba
+- name: gopkg.in/go-playground/validator.v8
+  version: c193cecd124b5cc722d7ee5538e945bdb3348435
 - name: gopkg.in/yaml.v2
   version: e4d366fc3c7938e2958e662b4258c7a89e1f0e3e
 testImports: []
