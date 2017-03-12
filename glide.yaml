@@ -10,3 +10,4 @@ import:
   subpackages:
   - dialects/postgres
 - package: github.com/satori/go.uuid
+- package: gopkg.in/olivere/elastic.v5

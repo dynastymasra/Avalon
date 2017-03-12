@@ -1,5 +1,5 @@
-hash: 153f72fbec162a25f35dce4273d6fb924510ead04190c5237cc17e5b9144a8f7
-updated: 2017-03-10T11:01:31.965559365+07:00
+hash: 9a7f92bdd4213f98b65c59cc97c1e91b12ffd405b1648f19f9a654c739d699ad
+updated: 2017-03-12T12:25:26.719139407+07:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197
@@ -79,6 +79,8 @@ imports:
   version: e2212d40c62a98b388a5eb48ecbdcf88534688ba
 - name: gopkg.in/go-playground/validator.v8
   version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: gopkg.in/olivere/elastic.v5
+  version: f27a28dd68c359eb20ce5918a7d976f34c18cf03
 - name: gopkg.in/yaml.v2
   version: e4d366fc3c7938e2958e662b4258c7a89e1f0e3e
 testImports: []
