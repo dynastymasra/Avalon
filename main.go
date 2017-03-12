@@ -8,6 +8,7 @@ import (
 	"avalon/model"
 	"avalon/routes"
 	"avalon/util"
+	"avalon/util/es"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -41,6 +42,11 @@ func main() {
 		log.WithFields(log.Fields{"file": "main.go", "package": "main"}).Fatalf("Database connection %v", err)
 	}
 	defer util.Database.Close()
+
+	es.ElasticConnector, err = es.NewElasticClient()
+	if err != nil {
+		log.WithFields(log.Fields{"file": "main.go", "package": "main"}).Fatalf("NewElasticClient %v", err)
+	}
 
 	if err := util.Database.AutoMigrate(&model.Order{}).Error; err != nil {
 		log.WithFields(log.Fields{"file": "main.go", "package": "main"}).Fatalf("Auto migration %v", err)

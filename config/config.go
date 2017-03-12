@@ -18,6 +18,10 @@ func SetDefault() {
 	viper.SetDefault("POSTGRES_ADDRESS", "192.168.99.100:5432")
 	viper.SetDefault("POSTGRES_DATABASE", "avalon")
 	viper.SetDefault("POSTGRES_LOGGING", "true")
+
+	// Elasticsearch config
+	viper.SetDefault("ELASTIC_ADDRESS", "http://192.168.99.100:9200")
+	viper.SetDefault("ELASTIC_INDEX", "orders")
 }
 
 // LoggerInit func used to initialize log
