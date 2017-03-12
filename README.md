@@ -2,10 +2,11 @@
 
 [![Go](https://img.shields.io/badge/go-1.8.0-00E5E6.svg)](https://golang.org/)
 [![Glide](https://img.shields.io/badge/glide-0.12.3-CFBDB1.svg)](https://glide.sh/)
+[![Elasticsearch](https://img.shields.io/badge/elasticsearch-5.2.2-FED10A.svg)](https://www.elastic.co/products/elasticsearch)
 [![Postgres](https://img.shields.io/badge/postgres-9.6.2-2C5687.svg)](https://www.postgresql.org/)
 [![License](https://img.shields.io/badge/license-MIT-44897A.svg)](https://github.com/dynastymasra/Avalon/blob/master/LICENSE)
 
-Avalon is simple project CRUD Golang (Go Programming Language) with database Postgres
+Avalon is simple project CRUD Golang (Go Programming Language) with database Postgres and Elasticsearch
 
 - Documentation this service in [Wiki](https://github.com/dynastymasra/Avalon/wiki)
 
