@@ -13,4 +13,6 @@ var (
 	ErrorRecordNotFound = errors.New("Record or data your requested not found")
 	// ErrorNotValidUUID error
 	ErrorNotValidUUID = errors.New("Id order is invalid")
+	// Error not Acknowledged index elastic
+	ErrorNotAcknowledgedIndex = errors.New("Create index not acknowledged")
 )
