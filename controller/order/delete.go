@@ -4,15 +4,19 @@ import (
 	"avalon/config"
 	"avalon/model"
 	"avalon/util"
+	"avalon/util/es"
+	"context"
 	"net/http"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/spf13/viper"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
 // DeleteOrderController control
 func DeleteOrderController(c *gin.Context) {
 	id := c.Param("id")
+	header := c.Request.Header.Get("X-Consumer-ID")
 
 	if validUUID := util.IsValidUUID(id); !validUUID {
 		log.WithFields(log.Fields{"file": "delete.go", "package": "controller.order"}).Errorf("IsValidUUID %v", config.ErrorNotValidUUID)
@@ -36,6 +40,27 @@ func DeleteOrderController(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, util.FailResponse(config.ErrDatabase.Error()))
 		return
 	}
+
+	// Update order to elastic for search
+	go func(consumer, id string) {
+		deleted, err := es.ElasticConnector.Delete().Index(viper.GetString("ELASTIC_INDEX")).Type(consumer).Id(id).Do(context.Background())
+		if err != nil {
+			log.WithFields(log.Fields{
+				"file":     "delete.go",
+				"package":  "controller.order",
+				"function": "DeleteOrderController.Delete",
+			}).Warning(err)
+		}
+
+		if !deleted.Found {
+			log.WithFields(log.Fields{
+				"file":     "delete.go",
+				"package":  "controller.order",
+				"function": "DeleteOrderController.deleted",
+				"deleted":  deleted.Found,
+			}).Warning("Deleted order not found in search")
+		}
+	}(header, id)
 
 	c.JSON(http.StatusOK, util.SuccessResponse())
 }

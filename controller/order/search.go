@@ -1,6 +1,7 @@
 package order
 
 import (
+	"avalon/config"
 	"avalon/model"
 	modelEs "avalon/model/es"
 	"avalon/util"
@@ -46,7 +47,7 @@ func SearchOrderController(c *gin.Context) {
 	var orders []model.Order
 
 	shopID := c.Param("shopId")
-	val := c.Query("search")
+	val := c.Query("query")
 
 	if val == "" {
 		log.WithFields(log.Fields{
@@ -86,6 +87,11 @@ func SearchOrderController(c *gin.Context) {
 			continue
 		}
 		orders = append(orders, doc)
+	}
+
+	if orders == nil {
+		c.JSON(http.StatusNotFound, util.FailResponse(config.ErrorRecordNotFound.Error()))
+		return
 	}
 
 	c.JSON(http.StatusOK, util.ObjectResponse(orders))

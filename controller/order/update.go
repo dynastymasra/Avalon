@@ -4,9 +4,12 @@ import (
 	"avalon/config"
 	"avalon/model"
 	"avalon/util"
+	"avalon/util/es"
+	"context"
 	"net/http"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/spf13/viper"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
@@ -47,6 +50,25 @@ func UpdateOrderController(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, util.FailResponse(config.ErrDatabase.Error()))
 		return
 	}
+
+	// Update order to elastic for search
+	go func(order model.Order) {
+		updated, err := es.ElasticConnector.Update().Index(viper.GetString("ELASTIC_INDEX")).Type(order.ShopID).Id(order.ID).
+			Doc(order).Do(context.Background())
+		if err != nil {
+			log.WithFields(log.Fields{
+				"file":     "update.go",
+				"package":  "controller.order",
+				"function": "UpdateOrderController.Update",
+			}).Warning(err)
+		}
+
+		log.WithFields(log.Fields{
+			"file":     "update.go",
+			"package":  "controller.order",
+			"function": "UpdateOrderController.Update",
+		}).Infof("Order id %v success update to search", updated.Id)
+	}(order)
 
 	c.JSON(http.StatusOK, util.ObjectResponse(order))
 }
