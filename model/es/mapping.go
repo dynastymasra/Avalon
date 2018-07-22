@@ -58,10 +58,10 @@ func SearchSetting() Mapper {
 	ngramAnalyzer["filter"] = []string{"lowercase"}
 	avalonNgramAnalyzer["avalon_ngram_analyzer"] = ngramAnalyzer
 
-	ngramTokenizer["type"] = "edge_ngram"
+	ngramTokenizer["type"] = "ngram"
 	ngramTokenizer["min_gram"] = 3
 	ngramTokenizer["max_gram"] = 10
-	ngramTokenizer["token_chars"] = []string{"letter", "digit"}
+	ngramTokenizer["token_chars"] = []string{"letter", "digit", "whitespace"}
 	avalonNgramTokenizer["avalon_ngram_tokenizer"] = ngramTokenizer
 
 	settingGroups["tokenizer"] = avalonNgramTokenizer
