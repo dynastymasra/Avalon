@@ -64,6 +64,10 @@
   name = "github.com/satori/go.uuid"
   version = "1.2.0"
 
+[[constraint]]
+  name = "github.com/golang-migrate/migrate"
+  version = "3.4.0"
+
 [prune]
   go-tests = true
   unused-packages = true

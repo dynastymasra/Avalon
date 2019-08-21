@@ -10,6 +10,20 @@
   version = "v1.4.7"
 
 [[projects]]
+  digest = "1:692b29784ba0a25c33a77cb4c2594e2ffc1e72fc66e17e87503e03a29cb227c5"
+  name = "github.com/golang-migrate/migrate"
+  packages = [
+    ".",
+    "database",
+    "database/postgres",
+    "source",
+    "source/file",
+  ]
+  pruneopts = "UT"
+  revision = "4937cd088f7c7193ee59b319c1c2caa7482aae8e"
+  version = "v3.5.4"
+
+[[projects]]
   digest = "1:b117faf01abdbdadd7b8ceeae74cd1369c1b073fef41aee8b674c9d704a54c16"
   name = "github.com/gorilla/handlers"
   packages = ["."]
@@ -234,10 +248,14 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/golang-migrate/migrate",
+    "github.com/golang-migrate/migrate/database/postgres",
+    "github.com/golang-migrate/migrate/source/file",
     "github.com/gorilla/handlers",
     "github.com/gorilla/mux",
     "github.com/jinzhu/gorm",
     "github.com/jinzhu/gorm/dialects/postgres",
+    "github.com/lib/pq",
     "github.com/matryer/resync",
     "github.com/satori/go.uuid",
     "github.com/sirupsen/logrus",
