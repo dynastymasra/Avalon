@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dynastymasra/avalon/infrastructure/web/middleware"
+
 	"github.com/dynastymasra/avalon/infrastructure/provider"
 
 	"github.com/dynastymasra/avalon/infrastructure/web/controller"
@@ -18,9 +20,8 @@ import (
 func Router(provider *provider.Instance) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true).UseEncodedPath()
 	commonHandlers := negroni.New(
-	//middleware.HTTPStatLogger(),
-	//middleware.RequestID(),
-	//middleware.DogStatsDMiddlewareLogger(),
+		middleware.HTTPStatLogger(),
+		middleware.RequestID(),
 	)
 
 	subRouter := router.PathPrefix("/v1/").Subrouter().UseEncodedPath()
