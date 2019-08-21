@@ -19,7 +19,7 @@ var (
 )
 
 type Connector struct {
-	Postgres *gorm.DB
+	DB *gorm.DB
 }
 
 func Connect() (*Connector, error) {
@@ -43,18 +43,18 @@ func Connect() (*Connector, error) {
 		db.LogMode(config.Database().LogEnabled())
 	})
 
-	return &Connector{Postgres: db}, err
+	return &Connector{DB: db}, err
 }
 
 func (c *Connector) Ping() error {
-	if c.Postgres == nil {
+	if c.DB == nil {
 		return errors.New("does't have database data")
 	}
-	return c.Postgres.DB().Ping()
+	return c.DB.DB().Ping()
 }
 
 func (c *Connector) Close() error {
-	if c.Postgres == nil {
+	if c.DB == nil {
 		return errors.New("does't have database data")
 	}
 	return db.Close()

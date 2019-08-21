@@ -7,7 +7,7 @@ import (
 )
 
 type LineItems struct {
-	Items []Item `json:"items" gorm:"type:jsonb;column:items;not null" validate:"dive,required"`
+	Items []Item `json:"items" gorm:"type:jsonb;column:items;not null" validate:"required,dive"`
 }
 
 type Item struct {

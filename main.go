@@ -6,6 +6,10 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/dynastymasra/avalon/service"
+
+	"github.com/dynastymasra/avalon/infrastructure/repository"
+
 	"github.com/dynastymasra/avalon/console"
 
 	"github.com/dynastymasra/avalon/infrastructure/provider"
@@ -38,6 +42,10 @@ func main() {
 
 	providerInstance := provider.NewInstance(postgresDB)
 
+	orderRepository := repository.NewOrderRepository(providerInstance.Postgres.DB)
+
+	serviceInstance := service.NewInstance(orderRepository)
+
 	clientApp := cli.NewApp()
 	clientApp.Name = config.ServiceName
 	clientApp.Version = config.Version
@@ -45,7 +53,7 @@ func main() {
 		server := &graceful.Server{
 			Timeout: 0,
 		}
-		go web.Run(server, providerInstance)
+		go web.Run(server, providerInstance, serviceInstance)
 		select {
 		case sig := <-stop:
 			<-server.StopChan()
@@ -69,7 +77,7 @@ func main() {
 				server := &graceful.Server{
 					Timeout: 0,
 				}
-				go web.Run(server, providerInstance)
+				go web.Run(server, providerInstance, serviceInstance)
 				select {
 				case sig := <-stop:
 					<-server.StopChan()
@@ -89,7 +97,7 @@ func main() {
 			Name:        "migrate:run",
 			Description: "Running Migration",
 			Action: func(c *cli.Context) error {
-				if err := console.RunDatabaseMigrations(postgresDB.Postgres.DB()); err != nil {
+				if err := console.RunDatabaseMigrations(postgresDB.DB.DB()); err != nil {
 					os.Exit(1)
 				}
 				return nil
@@ -99,7 +107,7 @@ func main() {
 			Name:        "migrate:rollback",
 			Description: "Rollback Migration",
 			Action: func(c *cli.Context) error {
-				if err := console.RollbackLatestMigration(postgresDB.Postgres.DB()); err != nil {
+				if err := console.RollbackLatestMigration(postgresDB.DB.DB()); err != nil {
 					os.Exit(1)
 				}
 				return nil

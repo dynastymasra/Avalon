@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dynastymasra/avalon/infrastructure/web/controller/order"
+
+	"github.com/dynastymasra/avalon/service"
+
 	"github.com/dynastymasra/avalon/infrastructure/web/middleware"
 
 	"github.com/dynastymasra/avalon/infrastructure/provider"
@@ -17,7 +21,7 @@ import (
 	"github.com/urfave/negroni"
 )
 
-func Router(provider *provider.Instance) *mux.Router {
+func Router(provider *provider.Instance, service service.Instance) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true).UseEncodedPath()
 	commonHandlers := negroni.New(
 		middleware.HTTPStatLogger(),
@@ -33,10 +37,14 @@ func Router(provider *provider.Instance) *mux.Router {
 	})
 
 	// Probes
-	subRouter.
-		Handle("/ping", commonHandlers.With(
-			negroni.WrapFunc(controller.Ping(provider)),
-		)).Methods(http.MethodGet, http.MethodHead)
+	subRouter.Handle("/ping", commonHandlers.With(
+		negroni.WrapFunc(controller.Ping(provider)),
+	)).Methods(http.MethodGet, http.MethodHead)
+
+	// Order group
+	subRouter.Handle("/orders", commonHandlers.With(
+		negroni.WrapFunc(order.Save(service)),
+	)).Methods(http.MethodPost)
 
 	return router
 }

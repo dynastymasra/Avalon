@@ -42,6 +42,21 @@ func (o OrderRepository) Find(ctx context.Context, query domain.Order, filter *r
 	return result, err
 }
 
+func (o OrderRepository) FindByID(ctx context.Context, id string) (*domain.Order, error) {
+	var (
+		result domain.Order
+		query  = domain.Order{
+			ID: id,
+		}
+	)
+
+	err := o.db.
+		Table(o.TableName).
+		Where(query).
+		First(&result).Error
+	return &result, err
+}
+
 func (o OrderRepository) Update(ctx context.Context, query domain.Order, update domain.Order) error {
 	return o.db.
 		Table(o.TableName).

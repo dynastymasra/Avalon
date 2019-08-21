@@ -3,6 +3,8 @@ package web
 import (
 	"net/http"
 
+	"github.com/dynastymasra/avalon/service"
+
 	"github.com/dynastymasra/avalon/infrastructure/provider"
 
 	"github.com/dynastymasra/avalon/config"
@@ -11,10 +13,10 @@ import (
 	"gopkg.in/tylerb/graceful.v1"
 )
 
-func Run(server *graceful.Server, provider *provider.Instance) {
+func Run(server *graceful.Server, provider *provider.Instance, service service.Instance) {
 	logrus.Infoln("Start run web application")
 
-	muxRouter := Router(provider)
+	muxRouter := Router(provider, service)
 
 	server.Server = &http.Server{
 		Addr: config.ServerAddress(),
